@@ -42,6 +42,28 @@
             </li> <!-- Divider -->";
         }
     ?>
+    <div class-"sidebar-heading">
+    Laporan
+    <!-- Nav Item -  Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link pb-0" href="<?=base_url('laporan/laporan_product');?>">
+            <i class="fa fa-fw fa-address-book"></i>
+            <span>Laporan Data Product</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link pb-0" href="<?=base_url('laporan/laporan_anggota');?>">
+            <i class="fa fa-fw fa-address-book"></i>
+            <span>Laporan Data Anggota</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link pb-0" href="<?=base_url('laporan/laporan_pembelian');?>">
+            <i class="fa fa-fw fa-address-book"></i>
+            <span>Laporan Data Pembelian</span></a>
+    </li>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider mt-3">
     <hr class="sidebar-divider mt-3"> <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline"> <button class="rounded-circle border-0" id="sidebarToggle"></button> </div>
 </ul> <!-- End of Sidebar -- >

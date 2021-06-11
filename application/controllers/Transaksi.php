@@ -24,7 +24,7 @@ class Transaksi extends CI_Controller
         $this->load->view("transaksi/list", $data);
         $this->load->view('templates/footer');
     }
-
+    
     public function add()
     {
         $data['judul'] = 'Buat Transaksi';
@@ -48,6 +48,7 @@ class Transaksi extends CI_Controller
             redirect('transaksi');
         }
     }
+    
 
     public function edit($id = null)
     {

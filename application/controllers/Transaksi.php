@@ -24,7 +24,7 @@ class Transaksi extends CI_Controller
         $this->load->view("transaksi/list", $data);
         $this->load->view('templates/footer');
     }
-    
+
     public function add()
     {
         $data['judul'] = 'Buat Transaksi';
@@ -48,7 +48,6 @@ class Transaksi extends CI_Controller
             redirect('transaksi');
         }
     }
-    
 
     public function edit($id = null)
     {
@@ -87,9 +86,23 @@ class Transaksi extends CI_Controller
     }
 
     function get_product()
-	{
-		$product_id = $this->input->post('id', TRUE);
-		$data = $this->ModelTransaksi->get_product($product_id)->result();
-		echo json_encode($data);
-	}
+    {
+        $product_id = $this->input->post('id', TRUE);
+        $data = $this->ModelTransaksi->get_product($product_id)->result();
+        echo json_encode($data);
+    }
+
+    public function printer()
+    {
+        $data["transaksi"] = $this->ModelTransaksi->getAll();
+
+        $this->load->view('transaksi/print_transaksi', $data);
+    }
+    
+    public function export_excel()
+    {
+        $data = array('transaksi' => $this->ModelTransaksi->getAll());
+
+        $this->load->view('transaksi/export_excel_transaksi', $data);
+    }
 }

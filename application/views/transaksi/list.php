@@ -7,8 +7,10 @@
 	<?php endif; ?>
 	<!-- DataTables -->
 	<div class="card mb-3">
-		<div class="card-header">
+		<div class="card-header" style="display: flex; justify-content: space-between;">
 			<a href="<?php echo site_url('transaksi/add') ?>"><i class="fas fa-plus"></i> Buat Transaksi</a>
+			<div style="display: flex;"><div style="text-align: right; margin-right: 10px;"><a class="btn btn-success btn-sm" href="<?php echo site_url('transaksi/printer') ?>"><i class="fas fa-print"></i> Print</a></div>
+			<div style="text-align: right;"><a class="btn btn-info btn-sm" href="<?php echo site_url('transaksi/export_excel') ?>"><i class="fas fa-file-excel"></i> Export ke Excel</a></div></div>
 		</div>
 		<div class="card-body">
 
@@ -20,7 +22,6 @@
 							<th>Tanggal Transaksi</th>
 							<th>Product</th>
 							<th>Harga</th>
-							<th>Satuan</th>
 							<th>Qty</th>
 							<th>Total Pembayaran</th>
 							<th>Action</th>
@@ -40,9 +41,6 @@
 								</td>
 								<td>
 								Rp. <?php echo number_format($list_transaksi->price) ?>
-								</td>
-								<td>
-									<?php echo $list_transaksi->nama_satuan ?>
 								</td>
 								<td>
 									<?php echo $list_transaksi->qty ?>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2020 at 11:39 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.3
+-- Generation Time: 13 Jun 2021 pada 22.39
+-- Versi Server: 10.1.30-MariaDB
+-- PHP Version: 5.6.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `tokobuah`
+-- Database: `toko_babymetal`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- Struktur dari tabel `product`
 --
 
 CREATE TABLE `product` (
@@ -38,19 +38,19 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `product`
+-- Dumping data untuk tabel `product`
 --
 
 INSERT INTO `product` (`product_id`, `name`, `satuan_id`, `price`, `image`, `description`) VALUES
-(1, 'Bantal ', 1, 100000, 'bantal metal.jpg', 'bantal nyaman dan lembut,serasa berkemah dengan baby metal '),
-(7, 'Kaos metal', 1, 50000, 'kaos metal.jpg', 'kaos trendy dengan gaya metal dan kawaii'),
-(8, 'Topi Metal', 1, 70000, 'topi metal.png', 'lawan panas matahari dengan topi metal'),
-(10, 'Topeng Kitsune Baby Metal', 2, 100000, 'topeng kitsune.png', 'menyamar dengan gaya baby metal,waaw keren ');
+(1, 'Hoodie Bundle', 1, 250000, 'img1623438799.jpg', 'Jaket Hoodie + CD Album'),
+(2, 'Poster Bundle', 1, 60000, 'img1623438849.jpg', 'Poster + CD Album'),
+(3, 'CD Album', 1, 50000, 'img1623438960.jpg', 'CD Album BabyMetal'),
+(4, 'Mug Bundle', 1, 80000, 'img1623439009.jpg', 'Mug + CD Album');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Struktur dari tabel `role`
 --
 
 CREATE TABLE `role` (
@@ -59,7 +59,7 @@ CREATE TABLE `role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `role`
+-- Dumping data untuk tabel `role`
 --
 
 INSERT INTO `role` (`role_id`, `role`) VALUES
@@ -69,7 +69,7 @@ INSERT INTO `role` (`role_id`, `role`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `satuan`
+-- Struktur dari tabel `satuan`
 --
 
 CREATE TABLE `satuan` (
@@ -78,17 +78,35 @@ CREATE TABLE `satuan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `satuan`
+-- Dumping data untuk tabel `satuan`
 --
 
 INSERT INTO `satuan` (`satuan_id`, `nama_satuan`) VALUES
-(1, 'pcs'),
-(2, 'merch');
+(1, 'Pcs');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaksi`
+-- Struktur dari tabel `temp`
+--
+
+CREATE TABLE `temp` (
+  `id` int(11) NOT NULL,
+  `tgl_transaksi` datetime DEFAULT NULL,
+  `id_user` varchar(12) NOT NULL,
+  `email_user` varchar(128) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `price` int(11) NOT NULL,
+  `description` varchar(128) NOT NULL,
+  `qty` int(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `transaksi`
 --
 
 CREATE TABLE `transaksi` (
@@ -101,23 +119,13 @@ CREATE TABLE `transaksi` (
   `qty` int(30) NOT NULL,
   `total_price` int(30) NOT NULL,
   `address` text NOT NULL,
-  `description` text DEFAULT NULL
+  `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `transaksi`
---
-
-INSERT INTO `transaksi` (`transaksi_id`, `product_id`, `price`, `satuan_id`, `user_id`, `tgl_transaksi`, `qty`, `total_price`, `address`, `description`) VALUES
-(1, 1, 100000, 1, 1, '2020-11-21', 2, 200000, 'Depok,Beji ', 'gambarnya yang babymetal ya,jangan jamrud'),
-(5, 7, 50000, 1, 1, '2020-11-21', 10, 500000, 'tanjung barat,jakarta selatan', 'kaos paguyuban a'),
-(7, 8, 70000, 1, 1, '2020-11-22', 1, 200000, 'Bogor,Jawa Barat', 'mau main ke kotu,panas'),
-(8, 10, 100000, 1, 1, '2020-11-22', 10, 100000, 'margonda,depok', 'begal pake topeng kitsune,biar kawaii kaya ayumi');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Struktur dari tabel `user`
 --
 
 CREATE TABLE `user` (
@@ -132,12 +140,16 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user`
+-- Dumping data untuk tabel `user`
 --
 
 INSERT INTO `user` (`id`, `nama`, `email`, `image`, `password`, `role_id`, `is_active`, `tanggal_input`) VALUES
 (1, 'Admin', 'admin@gmail.com', 'topeng kitsune.png', '$2y$04$Wbyfv4xwihb..POfhxY5Y.jHOJqEFIG3dLfBYwAmnOACpH0EWCCdq', 1, 1, 0),
-(2, 'Rama', 'rama@gmail.com', 'IMG_5346.jpg', '$2y$10$xzmWpK/SCRWgXHaNy8LksusyKFrc5J9Ze51nVtiwpb6/LPSNCIj1e', 2, 1, 1605680290);
+(2, 'Madya Ramadhani', 'rama@gmail.com', 'default.jpg', '$2y$10$D71TMGWYpbWbqrR3FECaKeaphzyHEvfci1YW5XgASOAa0OhXYlFY6', 2, 1, 1623615470),
+(3, 'Muhamad Ariansyah', 'ari@gmail.com', 'default.jpg', '$2y$10$nHer6.cV4lc4IAz/0feBruX.JzMTDMtT7IMUpVhjgFoJbEbBWQZDC', 2, 1, 1623615506),
+(4, 'Marifatul Vina Afifah', 'vina@gmail.com', 'default.jpg', '$2y$10$OkWQu.5rzoKbWm.vIV6fDuAYLt1fdMcYsOziYEemcDGwSEvTGVTIa', 2, 1, 1623615537),
+(5, 'Muhamad Hardiansyah', 'hardi@gmail.com', 'default.jpg', '$2y$10$AHjQGHHga.oOlT1kMXzaie4elZNOOnSARE3yZeatKdgaocQcfJl2y', 2, 1, 1623615615),
+(6, 'Rahma Annisa', 'nisa@gmail.com', 'default.jpg', '$2y$10$jSjk41z/1jNw2/fbGx3vl.dw25s34XUA3Eiiu30lv/weBStYGqXAG', 2, 1, 1623615667);
 
 --
 -- Indexes for dumped tables
@@ -162,6 +174,12 @@ ALTER TABLE `satuan`
   ADD PRIMARY KEY (`satuan_id`);
 
 --
+-- Indexes for table `temp`
+--
+ALTER TABLE `temp`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
@@ -181,7 +199,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `role`
@@ -196,16 +214,22 @@ ALTER TABLE `satuan`
   MODIFY `satuan_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `temp`
+--
+ALTER TABLE `temp`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `transaksi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `transaksi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

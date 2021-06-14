@@ -29,6 +29,7 @@ class ModelTransaksi extends CI_Model
             $this->db->join('user','transaksi.user_id = user.id', 'left');
             $this->db->where('transaksi.user_id', $this->session->userdata('id'));
         }
+        $this->db->order_by('transaksi.transaksi_id', 'desc');
         $query = $this->db->get('transaksi')->result();
         return $query;
     }
@@ -49,8 +50,8 @@ class ModelTransaksi extends CI_Model
         $post = $this->input->post();
         $this->product_id = $post["product_id"];
         $this->price = $post["price"];
-		$this->satuan_id = $post["satuan_id"];
-		$this->address = $post["address"];
+        $this->satuan_id = $post["satuan_id"];
+        $this->address = $post["address"];
         $this->description = $post["description"];
         $this->user_id = $post["user_id"];
         $this->tgl_transaksi = $post["tgl_transaksi"];
@@ -65,8 +66,8 @@ class ModelTransaksi extends CI_Model
         $this->transaksi_id = $post["id"];
         $this->product_id = $post["product_id"];
         $this->price = $post["price"];
-		$this->satuan_id = $post["satuan_id"];
-		$this->address = $post["address"];
+        $this->satuan_id = $post["satuan_id"];
+        $this->address = $post["address"];
         $this->description = $post["description"];
         $this->user_id = $post["user_id"];
         $this->tgl_transaksi = $post["tgl_transaksi"];
@@ -78,8 +79,8 @@ class ModelTransaksi extends CI_Model
     public function delete($id)
     {
         return $this->db->delete($this->_table, array("transaksi_id" => $id));
-	}
-	
+    }
+    
     function get_product($product_id)
     {
         $this->db->select('product.price, product.satuan_id, satuan.nama_satuan', FALSE);
@@ -96,5 +97,49 @@ class ModelTransaksi extends CI_Model
         $this->db->select('COUNT(transaksi_id) as transaksi_id', FALSE);
         $query = $this->db->get('transaksi');
         return $query;
+    }
+
+    public function getDataWhere($table, $where)
+    {
+        $this->db->where($where);
+        return $this->db->get($table);
+    }
+
+    public function insertData($table, $data)
+    {
+        $this->db->insert($table, $data);
+    }
+
+    public function getTemp($id)
+    {
+        $this->db->select('*', FALSE);
+        $this->db->where('id_user', $id);
+        $query = $this->db->get('temp')->num_rows();
+        return $query;
+    }
+
+    public function getTempList($id)
+    {
+        $this->db->select('*', FALSE);
+        $this->db->where('id_user', $id);
+        $query = $this->db->get('temp')->result_array();
+        return $query;
+    }
+
+    public function deleteData($where, $table)
+    {
+        $this->db->where($where);
+        $this->db->delete($table);
+    }
+
+    function insertOrder($orderArray)
+    {
+        $this->db->insert_batch('transaksi', $orderArray);
+    }
+
+    public function kosongkanOrder($table, $where)
+    {
+        $this->db->where('id_user',$where);
+        $this->db->delete($table);
     }
 }

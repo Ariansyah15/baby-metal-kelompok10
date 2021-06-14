@@ -102,9 +102,4 @@ class ModelProduct extends CI_Model
         $query = $this->db->get('product');
         return $query;
     }
-    public function getLimitProduct()
-    {
-        $this->db->limit(5);
-        return $this->db->get('product');
-    }
 }
